@@ -16,6 +16,28 @@ body {
     margin: 0 auto;
 }
 
+#connect-button {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    background: linear-gradient(45deg, #ff00ff, #00ffff);
+    color: #0d0d0d;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-shadow: 0 0 5px #00ffcc;
+    transition: background 0.3s;
+}
+
+#connect-button.connected {
+    background: linear-gradient(45deg, #00ff00, #00ffff);
+}
+
+#connect-button.disconnected {
+    background: linear-gradient(45deg, #ff0000, #ff00ff);
+}
+
+
 #power-button {
     width: 100%;
     padding: 15px;

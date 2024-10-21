@@ -46,6 +46,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    
+
     // Toggle power state
     powerButton.addEventListener('click', function() {
         jacketState.power = !jacketState.power;
@@ -92,6 +94,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // write characteristic value
     function writeCharacteristicValue(characteristic, value) {
+        if (bleServer && bleService && characteristic) {
+            return characteristic.writeValue(value)
+            .then(() => {
+                console.log('Wrote characteristic value:', value);
+            })
+            .catch(error => {
+                console.error('Error writing characteristic value:', error);
+            });
+        }
         
     }
 
