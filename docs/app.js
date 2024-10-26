@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Connect Button
     connectButton.addEventListener('click', function() {
         if (isWebBluetoothEnabled()) {
+            connectButton.textContent = 'Disconnect';
             connectToDevice()
             .then(characteristics => {
                 console.log('Connected to characteristics:', characteristics);
