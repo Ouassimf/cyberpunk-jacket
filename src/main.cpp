@@ -119,6 +119,9 @@ class PowerCharacteristicCallbacks : public BLECharacteristicCallbacks
       Serial.print("Power Characteristic event, written: ");
       // Print the value
       Serial.println(value.c_str());
+      // Set the power value
+      power = atoi(value.c_str());
+      
     }
   }
 };
@@ -240,6 +243,19 @@ void notify_all_characteristics()
   }
 }
 
+void set_led()
+{
+  if (power == 1)
+  {
+    digitalWrite(ledPin, HIGH);
+  }
+  else
+  {
+    digitalWrite(ledPin, LOW);
+  }
+}
+
+
 void loop()
 {
   // notify changed value
@@ -247,6 +263,8 @@ void loop()
   {
     // set_all_values();
     notify_all_characteristics();
+    set_led();
+    
     // Serial.println("Notified all characteristics");
     // Print all values
     // Serial.print("Mode: ");
