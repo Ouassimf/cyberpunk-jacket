@@ -56,8 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
         powerButton.classList.toggle('on', jacketState.power);
         powerButton.classList.toggle('off', !jacketState.power);
         console.log('Power:', jacketState.power);
-        // write "1" to turn on and "0" to turn off as string
-        writeCharacteristicValue(blePowerCharacteristic, new TextEncoder().encode(jacketState.power ? '1' : '0'));
+        writeCharacteristicValue(blePowerCharacteristic, new Uint8Array([jacketState.power ? 1 : 0]));
     });
 
     // Select mode from tiles

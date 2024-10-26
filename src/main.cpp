@@ -118,7 +118,7 @@ class PowerCharacteristicCallbacks : public BLECharacteristicCallbacks
     {
       Serial.print("Power Characteristic event, written: ");
       // Print the value
-      Serial.println(value.c_str());
+      Serial.println(String(value.c_str()));
       // Set the power value
       power = atoi(value.c_str());
       
@@ -264,7 +264,7 @@ void loop()
     // set_all_values();
     notify_all_characteristics();
     set_led();
-    
+
     // Serial.println("Notified all characteristics");
     // Print all values
     // Serial.print("Mode: ");
