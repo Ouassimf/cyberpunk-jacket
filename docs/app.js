@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         powerButton.classList.toggle('on', jacketState.power);
         powerButton.classList.toggle('off', !jacketState.power);
         console.log('Power:', jacketState.power);
+        writeCharacteristicValue(blePowerCharacteristic, new Uint8Array([jacketState.power ? 1 : 0]));
     });
 
     // Select mode from tiles
