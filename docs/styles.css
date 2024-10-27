@@ -34,6 +34,12 @@ body {
     cursor: pointer;
     text-shadow: 0 0 5px #00ffcc;
     transition: background 0.3s;
+    margin: 0 20px;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: 700;
+    text-transform: uppercase;
+    
+
 }
 
 #connect-button.connected {
@@ -56,6 +62,10 @@ body {
     cursor: pointer;
     text-shadow: 0 0 5px #00ffcc;
     transition: background 0.3s;
+    margin: 0 20px;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
 #power-button.on {
@@ -77,6 +87,7 @@ body {
     padding: 5px;
     box-sizing: border-box;
     position: relative;
+    cursor: pointer;
 }
 
 .tile img {
