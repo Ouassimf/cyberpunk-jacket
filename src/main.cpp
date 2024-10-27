@@ -17,7 +17,7 @@ const int ledPin = 2; // Use the appropriate GPIO pin for your setup
 
 void setup()
 {
-  Serial.begin(14400);
+  Serial.begin(115200);
   pinMode(ledPin, OUTPUT);
 
   setupLEDController();

@@ -168,6 +168,57 @@ void cylon()
     }
 }
 
+void heartbeat()
+{
+    static unsigned long nextUpdate = 0;
+    static uint8_t fadeAmount = 60;  // Controls fade speed
+    int start1 = 33;       // 25% point of each strip
+    int start2 = 121; // 75% point of each strip
+    static int offset = 0;
+
+    if (millis() > nextUpdate)
+    {
+        // Set brightness for the heartbeat pulse
+        FastLED.setBrightness(brightness);
+
+        // 25% starting point expansion
+        if (start1 - offset >= 0)
+        {
+            leds_L[start1 - offset] = CRGB(color_r, color_g, color_b);
+            leds_L[start1 + offset] = CRGB(color_r, color_g, color_b);
+            leds_R[start1 - offset] = CRGB(color_r, color_g, color_b);
+            leds_R[start1 + offset] = CRGB(color_r, color_g, color_b);
+        }
+        else
+        {
+            offset = 0;
+        }
+
+        // 75% starting point expansion
+        if (start2 - offset >= start1 && start2 + offset < NUM_LEDS)
+        {
+            leds_L[start2 - offset] = CRGB(color_r, color_g, color_b);
+            leds_L[start2 + offset] = CRGB(color_r, color_g, color_b);
+            leds_R[start2 - offset] = CRGB(color_r, color_g, color_b);
+            leds_R[start2 + offset] = CRGB(color_r, color_g, color_b);
+        }
+        else
+        {
+            //offset = 0;
+        }
+
+        offset++;
+
+        // Fade out the LEDs to create the heartbeat's fading effect
+        fadeToBlackBy(leds_L, NUM_LEDS, fadeAmount);
+        fadeToBlackBy(leds_R, NUM_LEDS, fadeAmount);
+
+        FastLED.show();
+        // Set the time for the next heartbeat update
+        nextUpdate = millis() + frequency;
+    }
+}
+
 void off()
 {
     static unsigned long nextUpdate = 0;
@@ -204,7 +255,7 @@ void executePattern()
         breathe();
         break;
     case 5:
-        v_path();
+        heartbeat();
         break;
     case 6:
         cylon();
@@ -212,4 +263,7 @@ void executePattern()
     default:
         cylon();
     }
+
+    // give sometime to the core
+    delay(2);
 }
