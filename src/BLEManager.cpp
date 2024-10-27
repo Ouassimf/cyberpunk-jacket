@@ -15,7 +15,7 @@ unsigned long previousMillis = 0;
 unsigned long notify_interval = 2000;
 
 // initial values for mode, brightness, frequency, color, power
-uint8_t mode = 3;
+uint8_t mode = 6;
 uint8_t brightness = 128;
 uint8_t frequency = 60;
 uint8_t color_r = 255;

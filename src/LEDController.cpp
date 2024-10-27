@@ -116,8 +116,79 @@ void breathe()
     }
 }
 
+void v_path()
+{
+    static unsigned long nextUpdate = 0;
+
+    // set color
+
+    if (millis() > nextUpdate)
+    {
+
+        // set first 40% of leds to black and rest to color
+        for (int i = 0; i < NUM_LEDS; i++)
+        {
+            if (i < NUM_LEDS * 0.6)
+            {
+                leds_L[i] = CRGB(color_r, color_g, color_b);
+                leds_R[i] = CRGB(color_r, color_g, color_b);
+            }
+            else
+            {
+                leds_L[i] = CRGB::Black;
+                leds_R[i] = CRGB::Black;
+            }
+        }
+
+        FastLED.setBrightness(brightness);
+        FastLED.show();
+        nextUpdate = millis() + frequency;
+    }
+}
+
+void cylon()
+{
+    static unsigned long nextUpdate = 0;
+    static int currentLed = 0;
+    static int direction = 1;
+
+    if (millis() > nextUpdate)
+    {
+        leds_L[currentLed] = CRGB(color_r, color_g, color_b);
+        leds_R[currentLed] = CRGB(color_r, color_g, color_b);
+        FastLED.show();
+        leds_L[currentLed] = CRGB::Black;
+        leds_R[currentLed] = CRGB::Black;
+        currentLed += direction;
+        if (currentLed == NUM_LEDS - 1 || currentLed == 0)
+        {
+            direction = -direction;
+        }
+        nextUpdate = millis() + frequency;
+    }
+}
+
+void off()
+{
+    static unsigned long nextUpdate = 0;
+    if (millis() > nextUpdate)
+    {
+        fill_solid(leds_L, NUM_LEDS, CRGB::Black);
+        fill_solid(leds_R, NUM_LEDS, CRGB::Black);
+        FastLED.show();
+        nextUpdate = millis() + frequency;
+    }
+}
+
 void executePattern()
 {
+    // if power is off, turn off the leds
+    if (power == 0)
+    {
+        off();
+        return;
+    }
+
     switch (mode)
     {
     case 1:
@@ -132,7 +203,13 @@ void executePattern()
     case 4:
         breathe();
         break;
+    case 5:
+        v_path();
+        break;
+    case 6:
+        cylon();
+        break;
     default:
-        beat();
+        cylon();
     }
 }
