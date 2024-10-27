@@ -1,47 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Cyberpunk Jacket Control</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="container">
-        <button id="connect-button" class="disconnected">Connect</button>
-        <button id="power-button" class="off">Turn On</button>
-        
+
+        <div class="horizontal-container">
+            <button id="connect-button" class="disconnected">Connect</button>
+            
+            <button id="power-button" class="off">Turn On</button>
+        </div>
         <div class="tile-grid">
-            <div class="tile" data-mode="mode1">
-                <img src="mode1.gif" alt="Mode 1">
+            <div class="tile" data-mode="1">
+                <img src="https://placehold.co/150/000000/FFFFFF/png?text=Mode+1" alt="Mode 1">
             </div>
-            <div class="tile" data-mode="mode2">
-                <img src="mode2.gif" alt="Mode 2">
+            <div class="tile" data-mode="2">
+                <img src="https://placehold.co/150/111111/FFFFFF/png?text=Mode+2" alt="Mode 2">
             </div>
-            <div class="tile" data-mode="mode3">
-                <img src="mode3.gif" alt="Mode 3">
+            <div class="tile" data-mode="3">
+                <img src="https://placehold.co/150/222222/FFFFFF/png?text=Mode+3" alt="Mode 3">
             </div>
-            <div class="tile" data-mode="mode4">
-                <img src="mode4.gif" alt="Mode 4">
+            <div class="tile" data-mode="4">
+                <img src="https://placehold.co/150/333333/FFFFFF/png?text=Mode+4" alt="Mode 4">
             </div>
-            <div class="tile" data-mode="mode5">
-                <img src="mode5.gif" alt="Mode 5">
+            <div class="tile" data-mode="5">
+                <img src="https://placehold.co/150/444444/FFFFFF/png?text=Mode+5" alt="Mode 5">
             </div>
-            <div class="tile" data-mode="mode6">
-                <img src="mode6.gif" alt="Mode 6">
+            <div class="tile" data-mode="6">
+                <img src="https://placehold.co/150/555555/FFFFFF/png?text=Mode+6" alt="Mode 6">
             </div>
         </div>
-        
+
         <label for="brightness">Brightness:</label>
-        <input type="range" id="brightness" min="0" max="100" value="50">
-        
+        <input type="range" id="brightness" min="0" max="255" value="50">
+
         <label for="frequency">Frequency:</label>
-        <input type="range" id="frequency" min="0" max="100" value="50">
-        
+        <input type="range" id="frequency" min="0" max="255" value="50">
+
         <label for="color-picker">Color:</label>
         <input type="color" id="color-picker" value="#ff0000">
     </div>
-    
+
     <script src="app.js"></script>
 </body>
+
 </html>

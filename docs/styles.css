@@ -16,6 +16,13 @@ body {
     margin: 0 auto;
 }
 
+.horizontal-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
 #connect-button {
     width: 100%;
     padding: 15px;
