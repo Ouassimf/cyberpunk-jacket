@@ -1,0 +1,4 @@
+<resources>
+    <!-- The window background before Compose draws; every other colour lives in ui/Theme.kt. -->
+    <color name="background">#0D0D0D</color>
+</resources>

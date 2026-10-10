@@ -1,0 +1,11 @@
+<resources>
+    <!-- Only what the window needs before Compose draws: a dark, bar-less frame. Everything else is themed in Compose. -->
+    <style name="Theme.Jacket" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:windowSplashScreenBackground">@color/background</item>
+    </style>
+</resources>

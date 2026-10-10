@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Two LED strips running down an open jacket front: cyan left, magenta right. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:pathData="M40,32 L49,42 L49,78 L34,78 L34,40 Z"
+        android:strokeColor="#00FFCC"
+        android:strokeWidth="3"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M68,32 L59,42 L59,78 L74,78 L74,40 Z"
+        android:strokeColor="#FF00FF"
+        android:strokeWidth="3"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M44.5,48 v3 M44.5,56 v3 M44.5,64 v3 M44.5,72 v3"
+        android:strokeColor="#00FFCC"
+        android:strokeWidth="3"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M63.5,48 v3 M63.5,56 v3 M63.5,64 v3 M63.5,72 v3"
+        android:strokeColor="#FF00FF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round" />
+</vector>
