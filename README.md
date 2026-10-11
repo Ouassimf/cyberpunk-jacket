@@ -57,12 +57,12 @@ Two WS2812B strips, 144 LEDs each, colour order GRB, and one of two controllers.
 | `firmware/test/` | Host unit tests for the core. |
 | `firmware/tools/ble_check.py` | Hardware check over Bluetooth, run from a PC. |
 | `firmware/tools/boot_other_slot.py` | Sends a jacket back to the firmware in its other app slot, over Bluetooth. |
+| `firmware/tools/deploy_via_wled.py` | Builds a firmware and installs it on the Gledopto through its WLED, in one command. |
 | `firmware/tools/read_status.py` | Reads a jacket's status line over Bluetooth: the heartbeat of a board without a serial port. |
 | `firmware/partitions_wled_4mb.csv` | WLED's partition table, so the Gledopto builds are checked against its slot size. Never flashed. |
 | `android/` | The Android app (Kotlin, Compose). |
-| `docs/` | The old Web Bluetooth control page. **It only works with the legacy firmware**, not with this one. |
 
-The original prototype firmware is kept under the git tag `legacy-v1` (`git checkout legacy-v1`).
+The original prototype firmware and its Web Bluetooth control page (`docs/`) are kept under the git tag `legacy-v1` (`git checkout legacy-v1`). That page only works with the prototype firmware.
 
 ## Prerequisites (Windows)
 
