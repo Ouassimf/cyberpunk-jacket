@@ -12,12 +12,12 @@ Read this first: a lot of the code has only ever run in tests.
 |---|---|
 | Portable firmware core (protocol, scene, effects, beat clock, audio analysis, boot decisions) | Host unit tests (`pio test -e native`) |
 | Firmware on the ESP32: boot, Bluetooth, every protocol command, persistence, frame rate, crash guard | On a real devkit, with `firmware/tools/ble_check.py` driving it from a PC |
-| Firmware on the Gledopto controller, the board in the jacket | `gledopto_bench` installed once through its WLED page. It advertises, answers `GET_INFO`, and a PC camera showed both front strips: solid red, green and blue in the right colours, dark when off, Rainbow, Comet moving. **Not checked there:** the button, the microphone, the way back to WLED, the strips on the back, the current drawn. |
+| Firmware on the Gledopto controller, the board in the jacket | `gledopto_bench`, then `gledopto_bench_mic`, installed through its WLED page. It advertises, answers `GET_INFO`, and a PC camera showed both front strips: solid red, green and blue in the right colours, dark when off, Rainbow, Comet moving. With a sound effect selected its status line showed the microphone task running on real signal at about a quarter of one core, 60 frames a second kept. **Not checked there:** the button, whether the effects follow music, the strips on the back, the current drawn. |
 | **How the light looks to the eye** (crossfades, flicker, beat timing, brightness against the budget) | **Never judged.** The camera check above is all there is. |
-| Installing through WLED's update page, and starting under WLED's old bootloader | On the devkit set up as a WLED board, many times, and once on the Gledopto. See [What was rehearsed](#what-was-rehearsed). |
-| The way back to the previous firmware, all three ways (crash guard, button, `BOOT_OTHER_SLOT`), ending with WLED up and answering; both firmwares keeping their settings across the trip | On the devkit set up as a WLED board. The button was pressed from the PC, through the USB adapter's DTR line. |
+| Installing through WLED's update page, and starting under WLED's old bootloader | On the devkit set up as a WLED board, many times, and four times on the Gledopto, the last two with [`deploy_via_wled.py`](#updating-in-one-command). See [What was rehearsed](#what-was-rehearsed). |
+| The way back to the previous firmware, all three ways (crash guard, button, `BOOT_OTHER_SLOT`), ending with WLED up and answering; both firmwares keeping their settings across the trip | On the devkit set up as a WLED board. The button was pressed from the PC, through the USB adapter's DTR line. On the Gledopto only `BOOT_OTHER_SLOT`, three times. |
 | A start-up that crashes or hangs is counted; safe mode; every refusal when there is no firmware to go back to | On the devkit. |
-| Built-in microphone: the capture task and what it costs | Measured on the devkit with no microphone wired, in silence and with a synthetic beat in place of the samples: see [Built-in microphone](#built-in-microphone). **It has never heard a sound.** |
+| Built-in microphone: the capture task and what it costs | Measured on the devkit with no microphone wired, in silence and with a synthetic beat in place of the samples: see [Built-in microphone](#built-in-microphone). On the Gledopto the real microphone delivers signal; **nobody has watched an effect follow music from it.** |
 | **WiFi, OTA upload, the log stream, the bootloader's rollback** | **Never run on hardware.** The code compiles and links (`jacket_ci`, `gledopto_ci`). |
 | **Power budget numbers** | Estimates from datasheets. Not measured. See [Power budget](#power-budget). |
 | **The Android app** | Unit tests and a demo mode. It has connected to the Gledopto and changed the effect; nothing more was checked. |
@@ -258,7 +258,7 @@ Close any serial monitor first: the script needs the port.
 
 ## Gledopto controller
 
-*On the Gledopto itself only the first install has been done, once. Everything else in this section was rehearsed on the devkit set up as a WLED board; see the end of the section.*
+*On the Gledopto itself: installs through WLED, the Bluetooth way back to WLED, and the one-command update. Everything else in this section was rehearsed on the devkit set up as a WLED board; see the end of the section.*
 
 The Gledopto has no USB or serial port. Firmware gets onto it in two ways only: through the update page of the WLED it was sold with, and, once a jacket firmware with WiFi credentials runs on it, over WiFi. A firmware that does not start cannot be replaced without a serial adapter and an opened case, which is why the first image is the plainest one and why there are three ways back.
 
@@ -281,7 +281,19 @@ Only the app is ever replaced. The bootloader and the partition table stay WLED'
 4. The jacket firmware now runs from the slot WLED was not in. WLED is still in its own. Look for "Jacket" over Bluetooth: `ble_check.py` without `--port` works against it.
 5. If the firmware crashes at start, WLED is back about ten seconds later. If neither "Jacket" nor WLED ever appears, the image did not start at all: see the last paragraph of [Rollback and safe mode](#rollback-and-safe-mode).
 
-To replace a `gledopto_bench` firmware (it has no WiFi): go [back to WLED](#the-way-back-to-the-previous-firmware) and install the new image from there. Both keep their settings through all of this.
+### Updating, in one command
+
+A firmware without WiFi is replaced by going [back to WLED](#the-way-back-to-the-previous-firmware) and installing the new image from there. `deploy_via_wled.py` does the whole round: build, `BOOT_OTHER_SLOT` over Bluetooth, upload to WLED, then ask the new firmware which build it is and compare that with the image. About two minutes, of which the jacket is dark for one. Both firmwares keep their settings.
+
+```powershell
+& "$env:LOCALAPPDATA\jacket-venv\Scripts\python.exe" tools\deploy_via_wled.py                       # gledopto_bench_mic
+& "$env:LOCALAPPDATA\jacket-venv\Scripts\python.exe" tools\deploy_via_wled.py --env gledopto_bench
+```
+
+- Press *Disconnect* in the phone app first. The jacket talks to one device at a time, and the script cannot find a jacket a phone is connected to.
+- Where the board is comes from `secrets.ini`: `gledopto_ble` (its Bluetooth address) and `gledopto_wled` (the address WLED gets from the router), or from `--address` and `--wled`.
+- It ends with `INSTALLED`, or says what it found instead: WLED refusing the image, WLED back because the new firmware crashed at start, or nothing answering. Until the upload has happened the jacket runs either its old firmware or WLED, and running the script again is always safe.
+- *Run on the Gledopto twice, building `gledopto_bench_mic`. Its failure branches other than "no jacket found" have not been seen happening.*
 
 ### With WiFi
 

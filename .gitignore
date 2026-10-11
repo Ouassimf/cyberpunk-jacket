@@ -17,3 +17,6 @@ android/local.properties
 android/.idea
 android/*.iml
 android/.kotlin
+
+# Python
+__pycache__/
